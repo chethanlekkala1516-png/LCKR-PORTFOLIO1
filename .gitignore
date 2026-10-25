@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Production build outputs
+client/dist/
+dist/
+
+# Local Environment Variables & Secrets (exclude secrets, allow templates)
+.env
+.env.local
+.env.*.local
+!.env.example
+client/.env
+client/.env.local
+client/.env.*.local
+!client/.env.example
+server/.env
+server/.env.local
+server/.env.*.local
+!server/.env.example
+
+# Server Local Storage & Logs
+server/data/
+*.log
+npm-debug.log*
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
