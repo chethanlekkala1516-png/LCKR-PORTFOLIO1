@@ -26,7 +26,8 @@ const allowedOrigins = process.env.CLIENT_ORIGIN
       'http://127.0.0.1:5173',
       'http://localhost:5174',
       'http://127.0.0.1:5174',
-      'http://localhost:3000'
+      'http://localhost:3000',
+      'https://lckr-portfolio-1.vercel.app'
     ];
 
 app.use(cors({
@@ -36,12 +37,19 @@ app.use(cors({
     if (allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
+    // Allow all vercel.app domains (production and preview URLs)
+    try {
+      const hostname = new URL(origin).hostname;
+      if (hostname.endsWith('.vercel.app') || hostname === 'localhost' || hostname === '127.0.0.1') {
+        return callback(null, true);
+      }
+    } catch {}
     // Allow preview deployments or local dev if matched
     const isLocal = /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
     if (isLocal) {
       return callback(null, true);
     }
-    return callback(new Error(`CORS error: Origin ${origin} not permitted`));
+    return callback(null, false);
   },
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type']
